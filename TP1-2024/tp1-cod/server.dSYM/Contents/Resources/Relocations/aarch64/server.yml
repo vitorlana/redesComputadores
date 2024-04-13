@@ -1,0 +1,13 @@
+---
+triple:          'arm64-apple-darwin'
+binary-path:     '/Users/vitorlana/workspace/redesComputadores/TP1-2024/tp1-cod/server'
+relocations:
+  - { offsetInCU: 0x26, offset: 0x26, size: 0x8, addend: 0x0, symName: _error, symObjAddr: 0x0, symBinAddr: 0x1000035C8, symSize: 0x20 }
+  - { offsetInCU: 0xF3, offset: 0xF3, size: 0x8, addend: 0x0, symName: _error, symObjAddr: 0x0, symBinAddr: 0x1000035C8, symSize: 0x20 }
+  - { offsetInCU: 0x117, offset: 0x117, size: 0x8, addend: 0x0, symName: _DieWithUserMessage, symObjAddr: 0x20, symBinAddr: 0x1000035E8, symSize: 0x68 }
+  - { offsetInCU: 0x149, offset: 0x149, size: 0x8, addend: 0x0, symName: _PrintSocketAddress, symObjAddr: 0x88, symBinAddr: 0x100003650, symSize: 0x1C0 }
+  - { offsetInCU: 0x1A5, offset: 0x1A5, size: 0x8, addend: 0x0, symName: __OSSwapInt16, symObjAddr: 0x248, symBinAddr: 0x100003810, symSize: 0x24 }
+  - { offsetInCU: 0x1CD, offset: 0x1CD, size: 0x8, addend: 0x0, symName: _main, symObjAddr: 0x26C, symBinAddr: 0x100003834, symSize: 0x214 }
+  - { offsetInCU: 0x268, offset: 0x268, size: 0x8, addend: 0x0, symName: _setupTCPServerSocket, symObjAddr: 0x480, symBinAddr: 0x100003A48, symSize: 0x224 }
+  - { offsetInCU: 0x311, offset: 0x311, size: 0x8, addend: 0x0, symName: _acceptTCPConnection, symObjAddr: 0x6A4, symBinAddr: 0x100003C6C, symSize: 0xDC }
+...

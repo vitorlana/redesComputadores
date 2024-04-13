@@ -1,0 +1,56 @@
+{
+    "configurations": [
+        {
+            "name": "client v4",
+            "type":  "lldb",
+            "request": "launch",
+            "preLaunchTask": "build client",
+            "program": "${workspaceFolder}/tp1-cod/client",
+            "args": [
+                "127.0.0.1",
+                "12345"
+            ],
+            "cwd": "${workspaceFolder}",
+            "postDebugTask": "clean client"
+        },
+        {
+            "name": "client v6",
+            "type":  "lldb",
+            "request": "launch",
+            "preLaunchTask": "build client",
+            "program": "${workspaceFolder}/tp1-cod/client",
+            "args": [
+                "0:0:0:0:0:0:0:1",
+                "12345"
+            ],
+            "cwd": "${workspaceFolder}",
+            "postDebugTask": "clean client"
+        },
+        {
+            "name": "server v4",
+            "type":  "lldb",
+            "request": "launch",
+            "preLaunchTask": "build server",
+            "program": "${workspaceFolder}/tp1-cod/server",
+            "args": [
+                "v4",
+                "12345"
+            ],
+            "cwd": "${workspaceFolder}",
+            "postDebugTask": "clean server"
+        },
+        {
+            "name": "server v6",
+            "type":  "lldb",
+            "request": "launch",
+            "preLaunchTask": "build server",
+            "program": "${workspaceFolder}/tp1-cod/server",
+            "args": [
+                "v6",
+                "12345"
+            ],
+            "cwd": "${workspaceFolder}",
+            "postDebugTask": "clean server"
+        }
+    ]
+}

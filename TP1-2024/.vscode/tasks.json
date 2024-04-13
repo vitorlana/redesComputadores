@@ -1,0 +1,68 @@
+{
+    "tasks": [
+        {
+            "type": "cppbuild",
+            "label": "build client",
+            "command": "/usr/bin/clang",
+            "args": [
+                "-fcolor-diagnostics",
+                "-fansi-escape-codes",
+                "-g",
+                "client.c",
+                "-o",
+                "${workspaceFolder}/tp1-cod/client"
+            ],
+            "options": {
+                "cwd": "${workspaceFolder}/tp1-cod"
+            },
+            "problemMatcher": [
+                "$gcc"
+            ],
+            "group": "build"
+        },
+        {
+            "type": "cppbuild",
+            "label": "build server",
+            "command": "/usr/bin/clang",
+            "args": [
+                "-fcolor-diagnostics",
+                "-fansi-escape-codes",
+                "-g",
+                "server.c",
+                "-o",
+                "${workspaceFolder}/tp1-cod/server"
+            ],
+            "options": {
+                "cwd": "${workspaceFolder}/tp1-cod"
+            },
+            "problemMatcher": [
+                "$gcc"
+            ],
+            "group": "build"
+        },
+        {
+            "type": "shell",
+            "label": "clean client",
+            "command": "rm",
+            "args": [
+                "-r",
+                "${workspaceFolder}/tp1-cod/client.dSYM",
+            ],
+            "group": {
+                "kind": "build",
+            }
+        },{
+            "type": "shell",
+            "label": "clean server",
+            "command": "rm",
+            "args": [
+                "-r",
+                "${workspaceFolder}/tp1-cod/server.dSYM"
+            ],
+            "group": {
+                "kind": "build",
+            }
+        }
+    ],
+    "version": "2.0.0"
+}
