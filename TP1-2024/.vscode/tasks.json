@@ -9,6 +9,8 @@
                 "-fansi-escape-codes",
                 "-g",
                 "client.c",
+                "networkUtilities.c",
+                "roomsSystemUtilities.c",
                 "-o",
                 "${workspaceFolder}/tp1-cod/client"
             ],
@@ -29,6 +31,8 @@
                 "-fansi-escape-codes",
                 "-g",
                 "server.c",
+                "networkUtilities.c",
+                "roomsSystemUtilities.c",
                 "-o",
                 "${workspaceFolder}/tp1-cod/server"
             ],

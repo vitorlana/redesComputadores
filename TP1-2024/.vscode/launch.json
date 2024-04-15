@@ -10,7 +10,7 @@
                 "127.0.0.1",
                 "12345"
             ],
-            "cwd": "${workspaceFolder}",
+            "cwd": "${workspaceFolder}/tp1-cod",
             "postDebugTask": "clean client"
         },
         {
@@ -23,7 +23,7 @@
                 "0:0:0:0:0:0:0:1",
                 "12345"
             ],
-            "cwd": "${workspaceFolder}",
+            "cwd": "${workspaceFolder}/tp1-cod",
             "postDebugTask": "clean client"
         },
         {
@@ -36,10 +36,11 @@
                 "v4",
                 "12345"
             ],
-            "cwd": "${workspaceFolder}",
+            "cwd": "${workspaceFolder}/tp1-cod",
             "postDebugTask": "clean server"
         },
         {
+            "showDevTools": false,
             "name": "server v6",
             "type":  "lldb",
             "request": "launch",
@@ -49,8 +50,15 @@
                 "v6",
                 "12345"
             ],
-            "cwd": "${workspaceFolder}",
-            "postDebugTask": "clean server"
+            "cwd": "${workspaceFolder}/tp1-cod",
+            "postDebugTask": "clean server",
         }
-    ]
+    ],
+    "compounds": [
+        {
+          "name": "server/client v6",
+          "configurations": ["server v6", "client v6"],
+          "stopAll": true
+        }
+      ]
 }
