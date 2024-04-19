@@ -77,7 +77,7 @@ int setupTCPServerSocket(const char* service) {
             socklen_t addrSize = sizeof(localAddr);
             if (getsockname(servSock, (struct sockaddr*)&localAddr, &addrSize) < 0)
                 error("getsockname() failed");
-			printSocketPortAndAddress((struct sockaddr*)&localAddr, "Binding to");
+			// printSocketPortAndAddress((struct sockaddr*)&localAddr, "Binding to");
             break;  // Bind and listen successful
         }
 
@@ -103,7 +103,7 @@ int acceptTCPConnection(int servSock) {
 
     // clntSock is connected to a client!
 
-	printSocketPortAndAddress((struct sockaddr*)&clntAddr, "Handling client: ");
+	// printSocketPortAndAddress((struct sockaddr*)&clntAddr, "Handling client: ");
 
     return clntSock;
 }
