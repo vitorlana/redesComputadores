@@ -13,9 +13,11 @@ int main(int argc, char* argv[]) {
     int sockfd, newsockfd, portno, clilen, n, typeConnection;
     char buffer[500];
 
-    Classroom* classrooms = NULL;
+    Classroom classrooms[MAX_ROOMS];
 
-    fprintf(stderr, "argv[1]: %s , argv[2]: %s\n", argv[1], argv[2]);
+    initializeClassrooms(classrooms);
+
+    // fprintf(stderr, "argv[1]: %s , argv[2]: %s\n", argv[1], argv[2]);
 
     if (argc < 3) {
         fprintf(stderr, "ERROR, missing arguments\n");
@@ -48,9 +50,15 @@ int main(int argc, char* argv[]) {
             fprintf(stderr, "Kill was received - %s\n", buffer);
             break;
         } else {
-            executeCommand(buffer, classrooms);
+            
+            fprintf(stderr, "Request received - %s\n", buffer);
 
-            n = send(newsockfd, "I got your command", 18, 0);
+            char* resultCommand = executeCommand(buffer, classrooms);
+
+            fprintf(stderr, "Response send - %s\n", resultCommand);
+
+
+            n = send(newsockfd, resultCommand, strlen(resultCommand), 0);
             if (n < 0)
                 errorWithoutKill("ERROR writing to socket");
         }
