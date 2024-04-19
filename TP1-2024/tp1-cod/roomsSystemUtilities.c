@@ -77,7 +77,7 @@ int checkCommand(char* text) {
         strncpy(temp, text, length);
         temp[length] = '\0';
         // Check if the temporary string belongs to the valid strings list
-        for (int i = 0; i < sizeof(validStrings) / sizeof(validStrings[0]); i++) {
+        for (unsigned long i = 0; i < sizeof(validStrings) / sizeof(validStrings[0]); i++) {
             if (strcmp(temp, validStrings[i]) == 0) {
                 return 1;  // Text belongs to the valid strings list
             }
@@ -316,7 +316,6 @@ char* updateSensorsValues(Classroom* classrooms, int roomId, char* sensorValues)
 // Function to check if any room was created
 int checkAnyRoomCreated(Classroom* classrooms) {
     for (int i = 0; i < MAX_ROOMS; i++) {
-        Classroom room = classrooms[i];
         if (classrooms[i].roomID != -999) {
             return 1;  // Room exists
         }

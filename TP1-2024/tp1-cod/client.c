@@ -10,9 +10,7 @@
 #include "roomsSystemUtilities.h"
 
 int main(int argc, char* argv[]) {
-    int sockfd, portno, n;
-
-    int typeConnection;
+    int sockfd, n;
 
     char buffer[500];
 
@@ -23,10 +21,8 @@ int main(int argc, char* argv[]) {
         exit(0);
     }
 
-    if (strchr(argv[1], '.') != NULL) {
-        typeConnection = 4;
-    } else if (strchr(argv[1], ':') != NULL) {
-        typeConnection = 6;
+    if (strchr(argv[1], '.') != NULL || strchr(argv[1], ':') != NULL) {
+        // Valid IP address
     } else {
         fprintf(stderr, "ERROR, invalid argument use only ipv4 or ipv6\n");
         exit(1);

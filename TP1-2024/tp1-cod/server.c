@@ -10,7 +10,7 @@
 #include "roomsSystemUtilities.h"
 
 int main(int argc, char* argv[]) {
-    int sockfd, newsockfd, portno, clilen, n, typeConnection;
+    int sockfd, newsockfd, n;
     char buffer[500];
 
     Classroom classrooms[MAX_ROOMS];
@@ -24,10 +24,8 @@ int main(int argc, char* argv[]) {
         exit(1);
     }
 
-    if (strcmp(argv[1], "v4") == 0) {
-        typeConnection = 4;
-    } else if (strcmp(argv[1], "v6") == 0) {
-        typeConnection = 6;
+    if (strcmp(argv[1], "v4") == 0 || strcmp(argv[1], "v6") == 0) {
+        // Valid IP address
     } else {
         fprintf(stderr, "ERROR, invalid argument use only v4 or v6\n");
         exit(1);
