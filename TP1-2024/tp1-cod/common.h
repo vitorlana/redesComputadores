@@ -1,10 +1,15 @@
-#ifndef ROOMS_SYSTEM_UTILITIES_H 
-#define ROOMS_SYSTEM_UTILITIES_H
+#ifndef COMMON_H 
+#define COMMON_H
 
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
 #include <stdbool.h>
+#include <arpa/inet.h>
+#include <netdb.h>
+#include <netinet/in.h>
+#include <sys/socket.h>
+#include <unistd.h>
 
 
 #define MAX_ROOMS 8
@@ -23,7 +28,13 @@ typedef struct {
     Fan fans[4];        // Array of fans, assuming 4 fans per room
 } Classroom;
 
-char* convertErrosAndSuccess(char* inputParameter);
+void error(char* msg);
+void errorWithoutKill(char* msg);
+void printSocketPortAndAddress(const struct sockaddr* address, char* message);
+int setupTCPServerSocket(const char* service);
+int acceptTCPConnection(int servSock);
+int setupTCPClientSocket(const char* host, const char* service);
+char* translateResponseToMessage(char* responseParameter);
 int checkCommand(char* text);
 char* executeCommand(char* command, Classroom* classrooms);
 char* readFileContents(char* fileName);
