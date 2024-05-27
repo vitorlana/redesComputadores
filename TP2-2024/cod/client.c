@@ -4,49 +4,140 @@
 #include <unistd.h>
 #include <arpa/inet.h>
 #include <sys/socket.h>
+#include <sys/select.h>
+#include <netdb.h>
 
 #define BUFFER_SIZE 500
 
-void communicate_with_server(int client_socket);
+void communicate_with_servers(int se_socket, int scii_socket);
 
 int main(int argc, char *argv[]) {
-    if (argc != 3) {
-        fprintf(stderr, "Usage: %s <server_ip> <server_port>\n", argv[0]);
+    if (argc != 4) {
+        fprintf(stderr, "Usage: %s <server_ip> <se_port> <scii_port>\n", argv[0]);
         exit(EXIT_FAILURE);
     }
 
-    int client_socket;
-    struct sockaddr_in server_addr;
+    int se_socket, scii_socket;
+    struct addrinfo hints, *res, *p;
+    int status;
 
-    client_socket = socket(AF_INET, SOCK_STREAM, 0);
-    server_addr.sin_family = AF_INET;
-    server_addr.sin_port = htons(atoi(argv[2]));
-    inet_pton(AF_INET, argv[1], &server_addr.sin_addr);
+    // Configuração do socket SE
+    memset(&hints, 0, sizeof hints);
+    hints.ai_family = AF_UNSPEC; // IPv4 ou IPv6
+    hints.ai_socktype = SOCK_STREAM;
 
-    if (connect(client_socket, (struct sockaddr*)&server_addr, sizeof(server_addr)) < 0) {
-        perror("connect");
+    if ((status = getaddrinfo(argv[1], argv[2], &hints, &res)) != 0) {
+        fprintf(stderr, "getaddrinfo: %s\n", gai_strerror(status));
         exit(EXIT_FAILURE);
     }
 
-    communicate_with_server(client_socket);
+    // Conecta ao servidor SE
+    for (p = res; p != NULL; p = p->ai_next) {
+        if ((se_socket = socket(p->ai_family, p->ai_socktype, p->ai_protocol)) == -1) {
+            perror("socket");
+            continue;
+        }
+        if (connect(se_socket, p->ai_addr, p->ai_addrlen) == -1) {
+            close(se_socket);
+            perror("connect");
+            continue;
+        }
+        break;
+    }
 
-    close(client_socket);
+    if (p == NULL) {
+        fprintf(stderr, "Falha na conexão ao servidor SE\n");
+        exit(EXIT_FAILURE);
+    }
+
+    freeaddrinfo(res);
+
+    // Configuração do socket SCII
+    if ((status = getaddrinfo(argv[1], argv[3], &hints, &res)) != 0) {
+        fprintf(stderr, "getaddrinfo: %s\n", gai_strerror(status));
+        exit(EXIT_FAILURE);
+    }
+
+    // Conecta ao servidor SCII
+    for (p = res; p != NULL; p = p->ai_next) {
+        if ((scii_socket = socket(p->ai_family, p->ai_socktype, p->ai_protocol)) == -1) {
+            perror("socket");
+            continue;
+        }
+        if (connect(scii_socket, p->ai_addr, p->ai_addrlen) == -1) {
+            close(scii_socket);
+            perror("connect");
+            continue;
+        }
+        break;
+    }
+
+    if (p == NULL) {
+        fprintf(stderr, "Falha na conexão ao servidor SCII\n");
+        exit(EXIT_FAILURE);
+    }
+
+    freeaddrinfo(res);
+
+    communicate_with_servers(se_socket, scii_socket);
+
+    close(se_socket);
+    close(scii_socket);
     return 0;
 }
 
-void communicate_with_server(int client_socket) {
+void communicate_with_servers(int se_socket, int scii_socket) {
     char buffer[BUFFER_SIZE];
-    printf("Enter a message: ");
-    fgets(buffer, BUFFER_SIZE, stdin);
+    fd_set read_fds;
+    int max_fd = se_socket > scii_socket ? se_socket : scii_socket;
+    
+    while (1) {
+        FD_ZERO(&read_fds);
+        FD_SET(STDIN_FILENO, &read_fds);
+        FD_SET(se_socket, &read_fds);
+        FD_SET(scii_socket, &read_fds);
 
-    send(client_socket, buffer, strlen(buffer), 0);
+        if (select(max_fd + 1, &read_fds, NULL, NULL, NULL) < 0) {
+            perror("select");
+            exit(EXIT_FAILURE);
+        }
 
-    int bytes_received = recv(client_socket, buffer, BUFFER_SIZE, 0);
-    if (bytes_received < 0) {
-        perror("recv");
-        return;
+        if (FD_ISSET(STDIN_FILENO, &read_fds)) {
+            // Leitura de entrada do usuário
+            if (fgets(buffer, BUFFER_SIZE, stdin) == NULL) {
+                perror("fgets");
+                exit(EXIT_FAILURE);
+            }
+
+            // Verifica se a mensagem é "kill"
+            if (strncmp(buffer, "kill", 4) == 0) {
+                printf("Encerrando conexões...\n");
+                send(se_socket, buffer, strlen(buffer), 0);
+                send(scii_socket, buffer, strlen(buffer), 0);
+                break;
+            }
+
+            // Envia a mensagem para ambos os servidores
+            send(se_socket, buffer, strlen(buffer), 0);
+            send(scii_socket, buffer, strlen(buffer), 0);
+        }
+
+        if (FD_ISSET(se_socket, &read_fds)) {
+            // Recebe a mensagem do servidor SE
+            int bytes_received = recv(se_socket, buffer, BUFFER_SIZE, 0);
+            if (bytes_received > 0) {
+                buffer[bytes_received] = '\0';
+                printf("From SE: %s\n", buffer);
+            }
+        }
+
+        if (FD_ISSET(scii_socket, &read_fds)) {
+            // Recebe a mensagem do servidor SCII
+            int bytes_received = recv(scii_socket, buffer, BUFFER_SIZE, 0);
+            if (bytes_received > 0) {
+                buffer[bytes_received] = '\0';
+                printf("From SCII: %s\n", buffer);
+            }
+        }
     }
-
-    buffer[bytes_received] = '\0';
-    printf("Received: %s\n", buffer);
 }
