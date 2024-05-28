@@ -1,0 +1,190 @@
+{
+    "version": "2.0.0",
+    "tasks": [
+        {
+            "label": "Compile Server",
+            "type": "shell",
+            "command": "gcc server.c -o server",
+            "group": {
+                "kind": "build",
+                "isDefault": true
+            },
+            "problemMatcher": []
+        },
+        {
+            "label": "Compile Client",
+            "type": "shell",
+            "command": "gcc client.c -o client",
+            "group": "build",
+            "problemMatcher": []
+        },
+        {
+            "label": "Run Server SE IPv4",
+            "type": "shell",
+            "command": "./server v4 12345",
+            "problemMatcher": [],
+            "presentation": {
+                "echo": true,
+                "reveal": "always",
+                "focus": true,
+                "panel": "new"
+            }
+        },
+        {
+            "label": "Run Server SCII IPv4",
+            "type": "shell",
+            "command": "./server v4 54321",
+            "problemMatcher": [],
+            "presentation": {
+                "echo": true,
+                "reveal": "always",
+                "focus": true,
+                "panel": "new"
+            }
+        },
+        {
+            "label": "Run Server SE IPv6",
+            "type": "shell",
+            "command": "./server v6 12345",
+            "problemMatcher": [],
+            "presentation": {
+                "echo": true,
+                "reveal": "always",
+                "focus": true,
+                "panel": "new"
+            }
+        },
+        {
+            "label": "Run Server SCII IPv6",
+            "type": "shell",
+            "command": "./server v6 54321",
+            "problemMatcher": [],
+            "presentation": {
+                "echo": true,
+                "reveal": "always",
+                "focus": true,
+                "panel": "new"
+            }
+        },
+        {
+            "label": "Run IPv4 Client 1",
+            "type": "shell",
+            "command": "./client 127.0.0.1 12345 54321",
+            "problemMatcher": [],
+            "presentation": {
+                "echo": true,
+                "reveal": "always",
+                "focus": true,
+                "panel": "new"
+            }
+        },
+        {
+            "label": "Run IPv4 Client 2",
+            "type": "shell",
+            "command": "./client 127.0.0.1 12345 54321",
+            "problemMatcher": [],
+            "presentation": {
+                "echo": true,
+                "reveal": "always",
+                "focus": true,
+                "panel": "new"
+            }
+        },
+        {
+            "label": "Run IPv4 Client 3",
+            "type": "shell",
+            "command": "./client 127.0.0.1 12345 54321",
+            "problemMatcher": [],
+            "presentation": {
+                "echo": true,
+                "reveal": "always",
+                "focus": true,
+                "panel": "new"
+            }
+        },
+        {
+            "label": "Run IPv4 Client 4",
+            "type": "shell",
+            "command": "./client 127.0.0.1 12345 54321",
+            "problemMatcher": [],
+            "presentation": {
+                "echo": true,
+                "reveal": "always",
+                "focus": true,
+                "panel": "new"
+            }
+        },
+        {
+            "label": "Run IPv4 Client 5",
+            "type": "shell",
+            "command": "./client 127.0.0.1 12345 54321",
+            "problemMatcher": [],
+            "presentation": {
+                "echo": true,
+                "reveal": "always",
+                "focus": true,
+                "panel": "new"
+            }
+        },
+        {
+            "label": "Run IPv6 Client 1",
+            "type": "shell",
+            "command": "./client ::1 12345 54321",
+            "problemMatcher": [],
+            "presentation": {
+                "echo": true,
+                "reveal": "always",
+                "focus": true,
+                "panel": "new"
+            }
+        },
+        {
+            "label": "Run IPv6 Client 2",
+            "type": "shell",
+            "command": "./client ::1 12345 54321",
+            "problemMatcher": [],
+            "presentation": {
+                "echo": true,
+                "reveal": "always",
+                "focus": true,
+                "panel": "new"
+            }
+        },
+        {
+            "label": "Run IPv6 Client 3",
+            "type": "shell",
+            "command": "./client ::1 12345 54321",
+            "problemMatcher": [],
+            "presentation": {
+                "echo": true,
+                "reveal": "always",
+                "focus": true,
+                "panel": "new"
+            }
+        },
+        {
+            "label": "Run IPv6 Client 4",
+            "type": "shell",
+            "command": "./client ::1 12345 54321",
+            "problemMatcher": [],
+            "presentation": {
+                "echo": true,
+                "reveal": "always",
+                "focus": true,
+                "panel": "new"
+            }
+        },
+        {
+            "label": "Run IPv6 Client 5",
+            "type": "shell",
+            "command": "./client ::1 12345 54321",
+            "problemMatcher": [],
+            "presentation": {
+                "echo": true,
+                "reveal": "always",
+                "focus": true,
+                "panel": "new"
+            }
+        }
+    ]
+}
