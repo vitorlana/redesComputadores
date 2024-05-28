@@ -20,10 +20,18 @@ int main(int argc, char *argv[]) {
     int se_socket, scii_socket;
     struct addrinfo hints, *res, *p;
     int status;
+    int family;
+
+    // Determinar a família do endereço com base no formato do IP
+    if (strchr(argv[1], ':')) {
+        family = AF_INET6; // IPv6
+    } else {
+        family = AF_INET; // IPv4
+    }
 
     // Configuração do socket SE
     memset(&hints, 0, sizeof hints);
-    hints.ai_family = AF_UNSPEC; // IPv4 ou IPv6
+    hints.ai_family = family; // Definir a família de endereços
     hints.ai_socktype = SOCK_STREAM;
 
     if ((status = getaddrinfo(argv[1], argv[2], &hints, &res)) != 0) {
@@ -53,6 +61,7 @@ int main(int argc, char *argv[]) {
     freeaddrinfo(res);
 
     // Configuração do socket SCII
+    hints.ai_family = family; // Definir a família de endereços novamente
     if ((status = getaddrinfo(argv[1], argv[3], &hints, &res)) != 0) {
         fprintf(stderr, "getaddrinfo: %s\n", gai_strerror(status));
         exit(EXIT_FAILURE);
