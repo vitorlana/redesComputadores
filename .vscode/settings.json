@@ -1,5 +1,11 @@
 {
     "files.associations": {
-        "stdio.h": "c"
+        "stdio.h": "c",
+        "inet.h": "c",
+        "stdlib.h": "c",
+        "socket.h": "c",
+        "limits": "c",
+        "ratio": "c",
+        "algorithm": "c"
     }
 }

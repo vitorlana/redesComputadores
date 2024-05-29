@@ -1,0 +1,4 @@
+teste
+comand1
+comands2
+kill
